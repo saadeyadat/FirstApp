@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             val text = editText.text.toString()
-            fruitList.add(Fruit("${fruitList.size + 1}. " + text, image, "No Info."))
+            fruitList.add(Fruit("${fruitList.size + 1}. " + text, image, mutableListOf()))
             recyclerView()
         }
     }
