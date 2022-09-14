@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firstapp.Fruit
 import com.example.firstapp.R
+import com.example.firstapp.database.Repository
+import kotlin.concurrent.thread
 
-class InfoAdapter(private val fruit: Fruit): RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
+class InfoAdapter(private val fruit: Fruit, private val repository: Repository): RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
 
     private var infoList: MutableList<String> = fruit.info.split(',').toMutableList() // convert info string to list to show it via recyclerview
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -31,6 +33,9 @@ class InfoAdapter(private val fruit: Fruit): RecyclerView.Adapter<InfoAdapter.Vi
         holder.deleteButton.setOnClickListener {
             infoList.removeAt(holder.layoutPosition)
             fruit.info = infoList.joinToString(",") // covert back the list to string to save it in the database
+            thread(start = true) {
+                repository.updateFruitInfo(fruit, fruit.info)
+            }
             notifyItemRemoved(position)
         }
     }

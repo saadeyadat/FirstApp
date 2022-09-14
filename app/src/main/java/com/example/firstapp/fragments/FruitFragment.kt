@@ -6,10 +6,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.firstapp.Fruit
 import com.example.firstapp.R
+import com.example.firstapp.database.Repository
 
-class FruitFragment(private val fruit: Fruit): Fragment(R.layout.fruit_fragment) {
+class FruitFragment(private val fruit: Fruit, private val repository: Repository): Fragment(R.layout.fruit_fragment) {
 
-    private val fruitFragmentInfo = FruitFragmentInfo(fruit)
+    private val fruitFragmentInfo = FruitFragmentInfo(fruit, repository)
     override fun onResume() {
         super.onResume()
         val fruitTextView = activity?.findViewById<TextView>(R.id.fruit_title)  // ? - is to insure that we don't give null

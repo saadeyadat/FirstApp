@@ -11,7 +11,7 @@ import com.example.firstapp.adapters.MyAdapter
 import com.example.firstapp.database.Repository
 import com.example.firstapp.fragments.FruitFragment
 import kotlin.concurrent.thread
-//mutableListOf()
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var repository: Repository
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayFruitFragment(fruit: Fruit) {
         val bundle = bundleOf("fruitName" to fruit.name, "fruitImage" to fruit.photo)
-        val fruitFragment = FruitFragment(fruit)
+        val fruitFragment = FruitFragment(fruit, repository)
         fruitFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.fragment_view, fruitFragment).commit()
     }

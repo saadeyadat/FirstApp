@@ -1,6 +1,7 @@
 package com.example.firstapp.database
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.firstapp.Fruit
 
@@ -20,7 +21,7 @@ class Repository(application: Application) {
         return fruitDao.getAllFruits()
     }
 
-    /*fun updateFruit(fruit: Fruit) {
+    fun updateFruit(fruit: Fruit) {
         Log.d("add button: ", fruit.info)
         fruitDao.updateFruit(fruit)
     }
@@ -29,5 +30,5 @@ class Repository(application: Application) {
         fruit.info = info
         Log.d("add button: ", fruit.info)
         updateFruit(fruit)
-    }*/
+    }
 }
