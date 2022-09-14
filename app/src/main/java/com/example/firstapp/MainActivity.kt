@@ -1,18 +1,29 @@
 package com.example.firstapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
-
+import com.example.firstapp.adapters.MyAdapter
+import com.example.firstapp.database.Repository
+import com.example.firstapp.fragments.FruitFragment
+import kotlin.concurrent.thread
+//mutableListOf()
 class MainActivity : AppCompatActivity() {
-    private val fruitList = mutableListOf<Fruit>()
+
+    private lateinit var repository: Repository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-         imageSelector()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        imageSelector()
+        repository = Repository(application)
     }
 
     private fun imageSelector() {
@@ -31,20 +42,19 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             val text = editText.text.toString()
-            fruitList.add(Fruit("${fruitList.size + 1}. " + text, image, mutableListOf()))
+            thread(start = true) {
+                repository.addFruit(Fruit(text, image, String()))
+            }
             recyclerView()
         }
     }
 
     private fun recyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = MyAdapter(fruitList){
-            displayFruitFragment(it)
-        }
+        val adapter = MyAdapter(mutableListOf(), repository){ displayFruitFragment(it) }
         recyclerView.adapter = adapter
+        repository.getAllFruits().observe(this) { adapter.updateView(it) }
     }
-
-    /*-------------------Fragments-------------------*/
 
     private fun displayFruitFragment(fruit: Fruit) {
         val bundle = bundleOf("fruitName" to fruit.name, "fruitImage" to fruit.photo)

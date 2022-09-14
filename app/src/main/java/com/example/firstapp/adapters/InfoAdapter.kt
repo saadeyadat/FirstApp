@@ -1,15 +1,17 @@
-package com.example.firstapp
+package com.example.firstapp.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.firstapp.Fruit
+import com.example.firstapp.R
 
-class InfoAdapter(private val infoList: MutableList<String>): RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
+class InfoAdapter(private val fruit: Fruit): RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
 
+    private var infoList: MutableList<String> = fruit.info.split(',').toMutableList() // convert info string to list to show it via recyclerview
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val textView: TextView
         val deleteButton: ImageButton
@@ -28,12 +30,12 @@ class InfoAdapter(private val infoList: MutableList<String>): RecyclerView.Adapt
         holder.textView.text = infoList[position]
         holder.deleteButton.setOnClickListener {
             infoList.removeAt(holder.layoutPosition)
+            fruit.info = infoList.joinToString(",") // covert back the list to string to save it in the database
             notifyItemRemoved(position)
         }
     }
 
     override fun getItemCount(): Int {
-        return infoList.size
+        return infoList.size-1
     }
-
 }

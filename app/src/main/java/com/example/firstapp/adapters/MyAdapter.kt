@@ -1,4 +1,4 @@
-package com.example.firstapp
+package com.example.firstapp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.firstapp.Fruit
+import com.example.firstapp.R
+import com.example.firstapp.database.Repository
+import kotlin.concurrent.thread
 
-class MyAdapter(private val dataList: MutableList<Fruit>, val onFruitClick: (Fruit) -> Unit): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(private val dataList: MutableList<Fruit>, private val repository: Repository, val onFruitClick: (Fruit) -> Unit): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val textView: TextView
@@ -31,7 +35,9 @@ class MyAdapter(private val dataList: MutableList<Fruit>, val onFruitClick: (Fru
         holder.imageView.setImageResource(dataList[position].photo)
 
         holder.delete.setOnClickListener {
-            dataList.removeAt(holder.layoutPosition)
+            thread(start = true) {
+                repository.deleteFruit(dataList[position])
+            }
             notifyItemRemoved(position)
         }
 
@@ -42,5 +48,11 @@ class MyAdapter(private val dataList: MutableList<Fruit>, val onFruitClick: (Fru
 
     override fun getItemCount(): Int {
         return dataList.size
+    }
+
+    fun updateView(fruitList: List<Fruit>) {
+        dataList.clear()
+        dataList.addAll(fruitList)
+        notifyDataSetChanged()
     }
 }

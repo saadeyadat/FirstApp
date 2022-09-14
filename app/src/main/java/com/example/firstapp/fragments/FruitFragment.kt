@@ -1,13 +1,11 @@
-package com.example.firstapp
+package com.example.firstapp.fragments
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import com.example.firstapp.Fruit
+import com.example.firstapp.R
 
 class FruitFragment(private val fruit: Fruit): Fragment(R.layout.fruit_fragment) {
 

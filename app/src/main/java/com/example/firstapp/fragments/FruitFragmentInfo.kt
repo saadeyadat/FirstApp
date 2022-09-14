@@ -1,14 +1,12 @@
-package com.example.firstapp
+package com.example.firstapp.fragments
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-
+import com.example.firstapp.Fruit
+import com.example.firstapp.R
+import com.example.firstapp.adapters.InfoAdapter
 
 class FruitFragmentInfo(private val fruit: Fruit): Fragment(R.layout.fruit_info_fragment) {
 
@@ -19,7 +17,7 @@ class FruitFragmentInfo(private val fruit: Fruit): Fragment(R.layout.fruit_info_
         val exitButton = activity?.findViewById<ImageButton>(R.id.exit_button2)
 
         addButton?.setOnClickListener {
-            fruit.info.add("${fruit.info.size+1}. ${addText?.text.toString()}")
+            fruit.info += addText?.text.toString() + ','
             infoRecyclerView()
         }
 
@@ -30,7 +28,7 @@ class FruitFragmentInfo(private val fruit: Fruit): Fragment(R.layout.fruit_info_
 
     private fun infoRecyclerView() {
         val infoRecyclerView = activity?.findViewById<RecyclerView>(R.id.infoRecyclerView)
-        val infoAdapter = InfoAdapter(fruit.info)
+        val infoAdapter = InfoAdapter(fruit)
         infoRecyclerView?.adapter = infoAdapter
     }
 }
