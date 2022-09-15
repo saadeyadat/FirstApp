@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/drawable/circle.xml" value="0.1625" />
         <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/drawable/circle_shape.xml" value="0.1435" />
-        <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/drawable/circle_shape2.xml" value="0.1625" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/drawable/img.xml" value="0.1625" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/layout/fruit_fragment.xml" value="0.1675929884566054" />
         <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/layout/fruit_info_fragment.xml" value="0.16673792218896966" />
         <entry key="..\:/Users/saad/AndroidStudioProjects/FirstApp/app/src/main/res/layout/info_recyclerview.xml" value="0.1675929884566054" />
