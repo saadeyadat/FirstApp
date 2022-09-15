@@ -14,7 +14,6 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var repository: Repository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         imageSelector()
-        repository = Repository(application)
     }
 
     private fun imageSelector() {
@@ -43,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             val text = editText.text.toString()
             thread(start = true) {
-                repository.addFruit(Fruit(text, image, String()))
+                Repository.getInstance(this).addFruit(Fruit(text, image, String()))
             }
             recyclerView()
         }
@@ -51,14 +49,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun recyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = MyAdapter(mutableListOf(), repository){ displayFruitFragment(it) }
+        val adapter = MyAdapter(mutableListOf(), this){ displayFruitFragment(it) }
         recyclerView.adapter = adapter
-        repository.getAllFruits().observe(this) { adapter.updateView(it) }
+        Repository.getInstance(this).getAllFruits().observe(this) { adapter.updateView(it) }
     }
 
     private fun displayFruitFragment(fruit: Fruit) {
         val bundle = bundleOf("fruitName" to fruit.name, "fruitImage" to fruit.photo)
-        val fruitFragment = FruitFragment(fruit, repository)
+        val fruitFragment = FruitFragment(fruit, this)
         fruitFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.fragment_view, fruitFragment).commit()
     }

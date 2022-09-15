@@ -12,9 +12,9 @@ abstract class FruitDatabase: RoomDatabase() {
     abstract fun getFruitDao(): FruitsDao
 
     companion object {
-        fun getDatabase(context: Context): FruitDatabase {
+        fun getDatabase(context: Context?): FruitDatabase {
             return Room.databaseBuilder(
-                context.applicationContext,
+                context!!.applicationContext,
                 FruitDatabase::class.java,
                 "fruit_database"
             ).build()

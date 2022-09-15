@@ -1,16 +1,16 @@
 package com.example.firstapp.fragments
 
+import android.content.Context
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.firstapp.Fruit
 import com.example.firstapp.R
-import com.example.firstapp.database.Repository
 
-class FruitFragment(private val fruit: Fruit, private val repository: Repository): Fragment(R.layout.fruit_fragment) {
+class FruitFragment(private val fruit: Fruit, context: Context): Fragment(R.layout.fruit_fragment) {
 
-    private val fruitFragmentInfo = FruitFragmentInfo(fruit, repository)
+    private val fruitFragmentInfo = FruitFragmentInfo(fruit, context)
     override fun onResume() {
         super.onResume()
         val fruitTextView = activity?.findViewById<TextView>(R.id.fruit_title)  // ? - is to insure that we don't give null

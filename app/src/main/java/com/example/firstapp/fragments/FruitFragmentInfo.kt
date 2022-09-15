@@ -1,5 +1,6 @@
 package com.example.firstapp.fragments
 
+import android.content.Context
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
@@ -10,7 +11,7 @@ import com.example.firstapp.adapters.InfoAdapter
 import com.example.firstapp.database.Repository
 import kotlin.concurrent.thread
 
-class FruitFragmentInfo(private val fruit: Fruit, private val repository: Repository): Fragment(R.layout.fruit_info_fragment) {
+class FruitFragmentInfo(private val fruit: Fruit, context: Context): Fragment(R.layout.fruit_info_fragment) {
 
     override fun onResume() {
         super.onResume()
@@ -21,7 +22,7 @@ class FruitFragmentInfo(private val fruit: Fruit, private val repository: Reposi
         addButton?.setOnClickListener {
             fruit.info += addText?.text.toString() + ','
             thread(start = true) {
-                repository.updateFruitInfo(fruit, fruit.info)
+                Repository.getInstance(context).updateFruitInfo(fruit, fruit.info)
             }
             infoRecyclerView()
         }
@@ -33,7 +34,7 @@ class FruitFragmentInfo(private val fruit: Fruit, private val repository: Reposi
 
     private fun infoRecyclerView() {
         val infoRecyclerView = activity?.findViewById<RecyclerView>(R.id.infoRecyclerView)
-        val infoAdapter = InfoAdapter(fruit, repository)
+        val infoAdapter = InfoAdapter(fruit, context)
         infoRecyclerView?.adapter = infoAdapter
     }
 }

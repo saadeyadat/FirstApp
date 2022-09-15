@@ -1,5 +1,6 @@
 package com.example.firstapp.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.example.firstapp.R
 import com.example.firstapp.database.Repository
 import kotlin.concurrent.thread
 
-class MyAdapter(private val dataList: MutableList<Fruit>, private val repository: Repository, val onFruitClick: (Fruit) -> Unit): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(private val dataList: MutableList<Fruit>, private val context: Context, val onFruitClick: (Fruit) -> Unit): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val textView: TextView
@@ -36,7 +37,7 @@ class MyAdapter(private val dataList: MutableList<Fruit>, private val repository
 
         holder.delete.setOnClickListener {
             thread(start = true) {
-                repository.deleteFruit(dataList[position])
+                Repository.getInstance(context).deleteFruit(dataList[position])
             }
             notifyItemRemoved(position)
         }

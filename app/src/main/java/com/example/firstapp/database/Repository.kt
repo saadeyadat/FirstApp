@@ -1,13 +1,22 @@
 package com.example.firstapp.database
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.firstapp.Fruit
 
-class Repository(application: Application) {
+class Repository private constructor(application: Context?) {
 
     private val fruitDao = FruitDatabase.getDatabase(application).getFruitDao()
+
+    companion object {
+        private lateinit var instance: Repository
+        fun getInstance(application: Context?): Repository {
+            if (!::instance.isInitialized)
+                instance = Repository(application)
+            return instance
+        }
+    }
 
     fun addFruit(fruit: Fruit) {
         fruitDao.insertFruit(fruit)

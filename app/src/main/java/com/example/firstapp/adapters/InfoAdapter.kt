@@ -1,5 +1,6 @@
 package com.example.firstapp.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.example.firstapp.R
 import com.example.firstapp.database.Repository
 import kotlin.concurrent.thread
 
-class InfoAdapter(private val fruit: Fruit, private val repository: Repository): RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
+class InfoAdapter(private val fruit: Fruit, private val context: Context?): RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
 
     private var infoList: MutableList<String> = fruit.info.split(',').toMutableList() // convert info string to list to show it via recyclerview
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -34,7 +35,7 @@ class InfoAdapter(private val fruit: Fruit, private val repository: Repository):
             infoList.removeAt(holder.layoutPosition)
             fruit.info = infoList.joinToString(",") // covert back the list to string to save it in the database
             thread(start = true) {
-                repository.updateFruitInfo(fruit, fruit.info)
+                Repository.getInstance(context).updateFruitInfo(fruit, fruit.info)
             }
             notifyItemRemoved(position)
         }
